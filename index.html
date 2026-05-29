@@ -8,6 +8,82 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Cabin:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
+/* ─── LOCK MODAL ─── */
+#lock-modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(10,20,60,0.55);
+  backdrop-filter: blur(4px);
+  align-items: center; justify-content: center;
+}
+#lock-modal-overlay.show { display: flex; }
+.lock-modal {
+  background: white;
+  border-radius: 20px;
+  padding: 36px 32px 28px;
+  width: 100%; max-width: 360px;
+  text-align: center;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.28);
+  animation: modalIn 0.25s ease;
+}
+@keyframes modalIn {
+  from { transform: scale(0.92) translateY(12px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+.lock-modal-icon { font-size: 44px; margin-bottom: 10px; }
+.lock-modal h2 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 20px; font-weight: 900;
+  color: #1A1A2E; margin-bottom: 4px;
+}
+.lock-modal p { font-size: 13px; color: #888; margin-bottom: 20px; }
+.lock-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #E8E8F0;
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 2px;
+  outline: none;
+  transition: border-color 0.2s;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.lock-input:focus { border-color: #4A90D9; }
+.lock-input.error { border-color: #FF6B6B; background: #FFF0F0; animation: shake 0.3s; }
+@keyframes shake {
+  0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)}
+}
+.lock-btn {
+  width: 100%;
+  padding: 13px;
+  background: #4A90D9;
+  color: white;
+  border: none; border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px; font-weight: 800;
+  cursor: pointer; transition: all 0.2s;
+}
+.lock-btn:hover { background: #2C5F8A; }
+.lock-error { color: #FF6B6B; font-size: 13px; margin-top: 10px; min-height: 18px; font-weight: 600; }
+/* ─── NAV LOCK BUTTON ─── */
+.nav-lock-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 2px solid #FF6B6B;
+  background: #FFF0F0;
+  color: #CC3333;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px; font-weight: 800;
+  cursor: pointer; transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-lock-btn:hover { background: #FF6B6B; color: white; }
+.nav-lock-btn.unlocked { border-color: #52C97E; background: #E8FAF0; color: #2A7A4A; }
+.nav-lock-btn.unlocked:hover { background: #52C97E; color: white; }
+
 :root {
   --yellow: #FFD93D;
   --yellow-dark: #E6B800;
@@ -514,6 +590,31 @@ nav {
 .quiz-result .score-big { font-size: 52px; font-weight: 900; font-family: var(--font-heading); color: var(--blue); }
 .quiz-result p { color: var(--text-soft); font-size: 15px; margin-top: 8px; margin-bottom: 24px; }
 
+/* ─── LOCK BARS ─── */
+.module-lock-bar {
+  margin-top: 12px;
+  padding: 7px 14px;
+  background: #FFF0F0;
+  border: 1.5px solid #FF6B6B;
+  border-radius: 20px;
+  font-size: 12px; font-weight: 800;
+  color: #CC3333;
+  font-family: var(--font-heading);
+  text-align: center;
+  transition: all 0.2s;
+}
+.module-lock-bar.unlocked {
+  background: #E8FAF0;
+  border-color: #52C97E;
+  color: #2A7A4A;
+}
+.btn-lock-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-size: 12px;
+}
 /* Utility */
 .flex { display: flex; }
 .items-center { align-items: center; }
@@ -524,16 +625,28 @@ nav {
 </head>
 <body>
 
+<!-- Lock Modal -->
+<div id="lock-modal-overlay">
+  <div class="lock-modal">
+    <div class="lock-modal-icon">🔐</div>
+    <h2>請解鎖以使用</h2>
+    <p>輸入密碼後即可使用所有學習功能</p>
+    <input class="lock-input" type="password" id="lock-input" placeholder="輸入密碼" onkeydown="if(event.key==='Enter')checkPassword()">
+    <button class="lock-btn" onclick="checkPassword()">🔓 解鎖</button>
+    <div class="lock-error" id="lock-error"></div>
+  </div>
+</div>
+
 <nav>
   <a class="logo" href="#" onclick="goPage('home');return false;">
     🇺🇸 <span>English</span>First
   </a>
   <ul class="nav-tabs">
     <li><button onclick="goPage('home')" id="tab-home" class="active">🏠 首頁</button></li>
-    <li><button onclick="goPage('kk')" id="tab-kk">🔤 KK音標</button></li>
-    <li><button onclick="goPage('vocab')" id="tab-vocab">📚 單字</button></li>
-    <li><button onclick="goPage('grammar')" id="tab-grammar">📝 文法</button></li>
-    <li><button onclick="goPage('quiz')" id="tab-quiz">🎯 測驗</button></li>
+    <li><button onclick="requireUnlock(()=>goPage('kk'))" id="tab-kk">🔤 KK音標</button></li>
+    <li><button onclick="requireUnlock(()=>goPage('vocab'))" id="tab-vocab">📚 單字</button></li>
+    <li><button onclick="requireUnlock(()=>goPage('grammar'))" id="tab-grammar">📝 文法</button></li>
+    <li><button onclick="requireUnlock(()=>goPage('quiz'))" id="tab-quiz">🎯 測驗</button></li>
   </ul>
   <div class="progress-badge" id="xp-badge">⭐ 0 XP</div>
 </nav>
@@ -546,8 +659,8 @@ nav {
       <h1>從零開始<em>說英文</em><br>第一步，現在就開始</h1>
       <p>從KK音標開始，循序漸進學習單字、文法和日常對話。<br>每天10分鐘，建立紮實的英文基礎。</p>
       <div class="hero-btns">
-        <button class="btn btn-primary" onclick="goPage('kk')">🎵 從音標開始學</button>
-        <button class="btn btn-outline" onclick="goPage('quiz')">🎯 快速測驗</button>
+        <button class="btn btn-primary" id="hero-btn-kk" onclick="requireUnlock(()=>goPage('kk'))"><span id="hero-kk-icon">🔒</span> 從音標開始學</button>
+        <button class="btn btn-outline" id="hero-btn-quiz" onclick="requireUnlock(()=>goPage('quiz'))"><span id="hero-quiz-icon">🔒</span> 快速測驗</button>
       </div>
     </div>
   </div>
@@ -555,28 +668,32 @@ nav {
     <div class="section-title">📖 學習路徑</div>
     <div class="section-sub">建議按照順序學習，打好每一個基礎</div>
     <div class="modules-grid">
-      <div class="module-card kk" onclick="goPage('kk')">
+      <div class="module-card kk" onclick="requireUnlock(()=>goPage('kk'))">
         <div class="module-icon">🔤</div>
         <h3>KK 音標</h3>
         <p>學習所有母音、子音符號，打好發音基礎</p>
+        <div class="module-lock-bar" id="lock-bar-kk">🔒 點擊解鎖使用</div>
         <div class="module-progress"><div class="module-progress-fill" id="prog-kk" style="width:0%; background: var(--purple);"></div></div>
       </div>
-      <div class="module-card vocab" onclick="goPage('vocab')">
+      <div class="module-card vocab" onclick="requireUnlock(()=>goPage('vocab'))">
         <div class="module-icon">📚</div>
         <h3>主題單字</h3>
         <p>依主題分類，搭配音標和例句學習</p>
+        <div class="module-lock-bar" id="lock-bar-vocab">🔒 點擊解鎖使用</div>
         <div class="module-progress"><div class="module-progress-fill" id="prog-vocab" style="width:0%;"></div></div>
       </div>
-      <div class="module-card grammar" onclick="goPage('grammar')">
+      <div class="module-card grammar" onclick="requireUnlock(()=>goPage('grammar'))">
         <div class="module-icon">📝</div>
         <h3>基礎文法</h3>
         <p>Be動詞到現在式，零基礎也看得懂</p>
+        <div class="module-lock-bar" id="lock-bar-grammar">🔒 點擊解鎖使用</div>
         <div class="module-progress"><div class="module-progress-fill" id="prog-grammar" style="width:0%; background: var(--green);"></div></div>
       </div>
-      <div class="module-card quiz" onclick="goPage('quiz')">
+      <div class="module-card quiz" onclick="requireUnlock(()=>goPage('quiz'))">
         <div class="module-icon">🎯</div>
         <h3>趣味測驗</h3>
         <p>選擇題、配對、填空，邊玩邊複習</p>
+        <div class="module-lock-bar" id="lock-bar-quiz">🔒 點擊解鎖使用</div>
         <div class="module-progress"><div class="module-progress-fill" id="prog-quiz" style="width:0%; background: var(--orange);"></div></div>
       </div>
     </div>
@@ -643,6 +760,99 @@ nav {
 </div>
 
 <script>
+// ─── PASSWORD ───
+let isUnlocked = sessionStorage.getItem('ef_auth') === '1';
+let pendingAction = null;
+
+function updateLockBtn(){
+  const btn = document.getElementById('nav-lock-btn');
+  if(btn){
+    if(isUnlocked){
+      btn.textContent = '🔓 已解鎖';
+      btn.classList.add('unlocked');
+    } else {
+      btn.textContent = '🔒 請解鎖';
+      btn.classList.remove('unlocked');
+    }
+  }
+  // Update all module lock bars
+  ['kk','vocab','grammar','quiz'].forEach(id => {
+    const bar = document.getElementById('lock-bar-' + id);
+    if(!bar) return;
+    if(isUnlocked){
+      bar.textContent = '🔓 點擊進入';
+      bar.classList.add('unlocked');
+    } else {
+      bar.textContent = '🔒 點擊解鎖使用';
+      bar.classList.remove('unlocked');
+    }
+  });
+  // Update hero buttons
+  const kkIcon = document.getElementById('hero-kk-icon');
+  const quizIcon = document.getElementById('hero-quiz-icon');
+  if(kkIcon) kkIcon.textContent = isUnlocked ? '🎵' : '🔒';
+  if(quizIcon) quizIcon.textContent = isUnlocked ? '🎯' : '🔒';
+}
+
+function toggleLockUI(){
+  if(isUnlocked){
+    // 已解鎖，點擊可鎖定
+    if(confirm('確定要鎖定平台嗎？')){
+      isUnlocked = false;
+      sessionStorage.removeItem('ef_auth');
+      updateLockBtn();
+      goPage('home');
+    }
+  } else {
+    openLockModal(null);
+  }
+}
+
+function requireUnlock(action){
+  if(isUnlocked){ action(); return; }
+  pendingAction = action;
+  openLockModal(action);
+}
+
+function openLockModal(action){
+  pendingAction = action;
+  document.getElementById('lock-input').value = '';
+  document.getElementById('lock-error').textContent = '';
+  document.getElementById('lock-modal-overlay').classList.add('show');
+  setTimeout(()=>document.getElementById('lock-input').focus(), 100);
+}
+
+function closeLockModal(){
+  document.getElementById('lock-modal-overlay').classList.remove('show');
+  pendingAction = null;
+}
+
+// Close modal when clicking overlay background
+document.getElementById('lock-modal-overlay').addEventListener('click', function(e){
+  if(e.target === this) closeLockModal();
+});
+// Run on load
+updateLockBtn();
+
+function checkPassword(){
+  const val = document.getElementById('lock-input').value;
+  const err = document.getElementById('lock-error');
+  const inp = document.getElementById('lock-input');
+  if(val === '01156688@'){
+    isUnlocked = true;
+    sessionStorage.setItem('ef_auth','1');
+    closeLockModal();
+    updateLockBtn();
+    err.textContent = '';
+    if(pendingAction){ pendingAction(); pendingAction = null; }
+  } else {
+    inp.classList.add('error');
+    err.textContent = '❌ 密碼錯誤，請再試一次';
+    inp.value = '';
+    setTimeout(()=>inp.classList.remove('error'), 500);
+  }
+}
+
 // ─── STATE ───
 let xp = parseInt(localStorage.getItem('xp') || '0');
 let favs = JSON.parse(localStorage.getItem('favs') || '[]');
@@ -1035,6 +1245,7 @@ function speak(text) {
 
 // Init
 renderKK();
+updateLockBtn();
 </script>
 </body>
 </html>
