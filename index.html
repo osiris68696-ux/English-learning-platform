@@ -713,10 +713,10 @@ nav {
       </div>
     </div>
     <div class="phoneme-tabs">
-      <button class="phoneme-tab active" onclick="filterKK('all',this)">全部</button>
-      <button class="phoneme-tab" onclick="filterKK('vowel',this)">母音 Vowels</button>
-      <button class="phoneme-tab" onclick="filterKK('consonant',this)">子音 Consonants</button>
-      <button class="phoneme-tab" onclick="filterKK('diphthong',this)">雙母音 Diphthongs</button>
+      <button class="phoneme-tab active" onclick="filterKK('all',this)">全部 41個</button>
+      <button class="phoneme-tab" onclick="filterKK('vowel',this)">母音 17個</button>
+      <button class="phoneme-tab" onclick="filterKK('diphthong',this)">雙母音 4個</button>
+      <button class="phoneme-tab" onclick="filterKK('consonant',this)">子音 24個</button>
     </div>
     <div class="phoneme-grid" id="phoneme-grid"></div>
   </div>
@@ -881,52 +881,52 @@ function goPage(id) {
 
 // ─── KK DATA ───
 const phonemes = [
-  // Vowels
-  { sym: 'i', ex: 'see', cn: '長音i', type: 'vowel' },
-  { sym: 'ɪ', ex: 'sit', cn: '短音i', type: 'vowel' },
-  { sym: 'e', ex: 'say', cn: '長音e', type: 'vowel' },
-  { sym: 'ɛ', ex: 'bed', cn: '短音e', type: 'vowel' },
-  { sym: 'æ', ex: 'cat', cn: '扁a音', type: 'vowel' },
-  { sym: 'ɑ', ex: 'hot', cn: '長a音', type: 'vowel' },
-  { sym: 'ɔ', ex: 'law', cn: '圓o音', type: 'vowel' },
-  { sym: 'o', ex: 'go', cn: '長o音', type: 'vowel' },
-  { sym: 'ʊ', ex: 'book', cn: '短u音', type: 'vowel' },
-  { sym: 'u', ex: 'food', cn: '長u音', type: 'vowel' },
-  { sym: 'ʌ', ex: 'cup', cn: '短o/u音', type: 'vowel' },
-  { sym: 'ə', ex: 'about', cn: '輕聲音', type: 'vowel' },
-  { sym: 'ɝ', ex: 'bird', cn: '捲舌r音', type: 'vowel' },
-  { sym: 'ɚ', ex: 'butter', cn: '輕捲舌', type: 'vowel' },
-  // Diphthongs
-  { sym: 'aɪ', ex: 'fly', cn: '雙母音ai', type: 'diphthong' },
-  { sym: 'aʊ', ex: 'now', cn: '雙母音au', type: 'diphthong' },
-  { sym: 'ɔɪ', ex: 'boy', cn: '雙母音oi', type: 'diphthong' },
-  { sym: 'eɪ', ex: 'day', cn: '雙母音ei', type: 'diphthong' },
-  { sym: 'oʊ', ex: 'go', cn: '雙母音ou', type: 'diphthong' },
-  // Consonants
-  { sym: 'p', ex: 'pen', cn: '無聲p', type: 'consonant' },
-  { sym: 'b', ex: 'big', cn: '有聲b', type: 'consonant' },
-  { sym: 't', ex: 'top', cn: '無聲t', type: 'consonant' },
-  { sym: 'd', ex: 'dog', cn: '有聲d', type: 'consonant' },
-  { sym: 'k', ex: 'cat', cn: '無聲k', type: 'consonant' },
-  { sym: 'g', ex: 'go', cn: '有聲g', type: 'consonant' },
-  { sym: 'f', ex: 'fan', cn: '無聲f', type: 'consonant' },
-  { sym: 'v', ex: 'van', cn: '有聲v', type: 'consonant' },
-  { sym: 's', ex: 'sun', cn: '無聲s', type: 'consonant' },
-  { sym: 'z', ex: 'zoo', cn: '有聲z', type: 'consonant' },
-  { sym: 'θ', ex: 'think', cn: '無聲th', type: 'consonant' },
-  { sym: 'ð', ex: 'the', cn: '有聲th', type: 'consonant' },
-  { sym: 'ʃ', ex: 'shoe', cn: '無聲sh', type: 'consonant' },
-  { sym: 'ʒ', ex: 'vision', cn: '有聲zh', type: 'consonant' },
-  { sym: 'h', ex: 'hat', cn: '氣音h', type: 'consonant' },
-  { sym: 'tʃ', ex: 'chair', cn: '無聲ch', type: 'consonant' },
-  { sym: 'dʒ', ex: 'jump', cn: '有聲j', type: 'consonant' },
-  { sym: 'm', ex: 'map', cn: '鼻音m', type: 'consonant' },
-  { sym: 'n', ex: 'net', cn: '鼻音n', type: 'consonant' },
-  { sym: 'ŋ', ex: 'ring', cn: '鼻音ng', type: 'consonant' },
-  { sym: 'l', ex: 'leg', cn: '邊音l', type: 'consonant' },
-  { sym: 'r', ex: 'red', cn: '捲舌r', type: 'consonant' },
-  { sym: 'w', ex: 'wet', cn: '半母音w', type: 'consonant' },
-  { sym: 'j', ex: 'yes', cn: '半母音y', type: 'consonant' },
+  // ── 1. 單母音（短音與放鬆音）──
+  { sym: 'ɪ',  ex: 'sit / big / kit',        cn: '發短促的「一」，上下有小橫槓',               type: 'vowel' },
+  { sym: 'ɛ',  ex: 'bed / leg / pen',        cn: '嘴角不用拉太開的「ㄝ」',                     type: 'vowel' },
+  { sym: 'æ',  ex: 'cat / bag / apple',      cn: '蝴蝶音，張大嘴巴發「ㄝ＋ㄚ」',               type: 'vowel' },
+  { sym: 'ɑ',  ex: 'hot / box / top',        cn: '嘴巴張最自然的「啊」（醫生檢查喉嚨）',        type: 'vowel' },
+  { sym: 'ʌ',  ex: 'cup / bus / sun',        cn: '重音節，短促有力的「啊」（從肚子發音）',       type: 'vowel' },
+  { sym: 'ʊ',  ex: 'book / foot / good',     cn: '馬蹄形符號，發輕放鬆的「ㄨ」',               type: 'vowel' },
+  { sym: 'ə',  ex: 'about / sofa / legend',  cn: '輕音節，最放鬆點到為止的「ㄜ」',             type: 'vowel' },
+  // ── 2. 長母音與雙母音 ──
+  { sym: 'i',  ex: 'see / eat / me',         cn: '微笑拉長的「一～」',                         type: 'vowel' },
+  { sym: 'eɪ', ex: 'say / day / name',       cn: '發「ㄟㄧ」的音（雙母音）',                   type: 'diphthong' },
+  { sym: 'oʊ', ex: 'go / boat / no',         cn: '尾音是馬蹄形ʊ，發「ㄡㄨ」（雙母音）',        type: 'diphthong' },
+  { sym: 'u',  ex: 'food / blue / too',      cn: '嘴唇用力縮小嘟起來的「ㄨ～」',               type: 'vowel' },
+  { sym: 'ɔ',  ex: 'law / dog / fall',       cn: '嘴巴張大呈長橢圓形的「ㄛ」',                 type: 'vowel' },
+  { sym: 'aɪ', ex: 'fly / bike / light',     cn: '雙母音「ㄞ」',                              type: 'diphthong' },
+  { sym: 'aʊ', ex: 'now / cow / house',      cn: '尾音是ʊ，發「ㄠㄨ」（雙母音）',              type: 'diphthong' },
+  { sym: 'ɔɪ', ex: 'boy / oil / coin',       cn: '雙母音「ㄛㄧ」',                            type: 'diphthong' },
+  // ── 3. R系列母音（捲舌音）──
+  { sym: 'ɝ',  ex: 'bird / her / work',      cn: '重音節捲舌音「ㄦ～」',                       type: 'vowel' },
+  { sym: 'ɚ',  ex: 'butter / teacher',       cn: '輕音節（字尾）放鬆捲舌音「ㄦ」',             type: 'vowel' },
+  // ── 子音：無聲 vs 有聲對稱組 ──
+  { sym: 'p',  ex: 'pen',    cn: '無聲｜雙唇閉緊後突然爆破彈開',                              type: 'consonant' },
+  { sym: 'b',  ex: 'big',    cn: '有聲｜雙唇閉緊後突然爆破彈開',                              type: 'consonant' },
+  { sym: 't',  ex: 'top',    cn: '無聲｜舌尖點在上排牙齦後爆破',                              type: 'consonant' },
+  { sym: 'd',  ex: 'dog',    cn: '有聲｜舌尖點在上排牙齦後爆破',                              type: 'consonant' },
+  { sym: 'k',  ex: 'cat',    cn: '無聲｜舌根頂住軟顎後爆破',                                 type: 'consonant' },
+  { sym: 'g',  ex: 'go',     cn: '有聲｜舌根頂住軟顎後爆破',                                 type: 'consonant' },
+  { sym: 'f',  ex: 'fan',    cn: '無聲｜上排牙齒輕咬著下嘴唇吐氣',                            type: 'consonant' },
+  { sym: 'v',  ex: 'van',    cn: '有聲｜上排牙齒輕咬著下嘴唇吐氣',                            type: 'consonant' },
+  { sym: 's',  ex: 'sun',    cn: '無聲｜牙齒咬合吐氣（像蛇叫）',                              type: 'consonant' },
+  { sym: 'z',  ex: 'zoo',    cn: '有聲｜牙齒咬合吐氣（像蜜蜂）',                              type: 'consonant' },
+  { sym: 'ʃ',  ex: 'shoe',   cn: '無聲｜嘴唇嘟起，安靜「噓」的摩擦音',                        type: 'consonant' },
+  { sym: 'ʒ',  ex: 'vision', cn: '有聲｜嘴唇嘟起，安靜「噓」的摩擦音',                        type: 'consonant' },
+  { sym: 'tʃ', ex: 'chair',  cn: '無聲｜類似注音「七」的爆破摩擦音',                           type: 'consonant' },
+  { sym: 'dʒ', ex: 'jump',   cn: '有聲｜類似注音「居」的爆破摩擦音',                           type: 'consonant' },
+  { sym: 'θ',  ex: 'think',  cn: '無聲｜舌尖伸出上下牙齒中間輕咬吐氣',                        type: 'consonant' },
+  { sym: 'ð',  ex: 'the',    cn: '有聲｜舌尖伸出上下牙齒中間輕咬吐氣',                        type: 'consonant' },
+  // ── 其他子音 ──
+  { sym: 'h',  ex: 'hat / home',  cn: '氣音｜像對著鏡子哈氣',                               type: 'consonant' },
+  { sym: 'm',  ex: 'map / name',  cn: '閉嘴鼻音｜雙唇緊閉，聲音從鼻子出來',                   type: 'consonant' },
+  { sym: 'n',  ex: 'net / pen',   cn: '頂舌鼻音｜舌尖頂住上牙齦，嘴巴微張',                   type: 'consonant' },
+  { sym: 'ŋ',  ex: 'ring / sing', cn: '後鼻音｜舌根頂住，類似注音「ㄥ」',                     type: 'consonant' },
+  { sym: 'l',  ex: 'leg / ball',  cn: '邊音｜字首發「勒」，字尾發「ㄛ」',                     type: 'consonant' },
+  { sym: 'r',  ex: 'red / run',   cn: '捲舌音｜嘴唇縮圓，舌尖往後捲不碰上顎',                 type: 'consonant' },
+  { sym: 'w',  ex: 'wet / win',   cn: '半母音｜類似「ㄨ」的快速滑音',                         type: 'consonant' },
+  { sym: 'j',  ex: 'yes / you',   cn: '半母音｜類似「ㄧ」的快速滑音',                         type: 'consonant' },
 ];
 
 let kkFilter = 'all';
@@ -940,7 +940,7 @@ function renderKK() {
   const grid = document.getElementById('phoneme-grid');
   const filtered = kkFilter === 'all' ? phonemes : phonemes.filter(p => p.type === kkFilter);
   grid.innerHTML = filtered.map(p => `
-    <div class="phoneme-card" onclick="speakPhoneme('${p.ex}', this)" title="點擊播放 ${p.ex}">
+    <div class="phoneme-card" onclick="speakPhoneme('${p.sym}', this)" title="點擊播放 ${p.sym}">
       <span class="phoneme-symbol">[${p.sym}]</span>
       <div class="phoneme-example">${p.ex}</div>
       <div class="phoneme-cn">${p.cn}</div>
@@ -948,11 +948,70 @@ function renderKK() {
     </div>
   `).join('');
 }
-function speakPhoneme(word, el) {
+// Each phoneme mapped to a short clear example word + slow rate for clear pronunciation
+const phonemeMap = {
+  'ɪ':  { word:'sit',    rate:0.6 },
+  'ɛ':  { word:'bed',    rate:0.6 },
+  'æ':  { word:'cat',    rate:0.6 },
+  'ɑ':  { word:'hot',    rate:0.6 },
+  'ʌ':  { word:'cup',    rate:0.6 },
+  'ʊ':  { word:'book',   rate:0.6 },
+  'ə':  { word:'about',  rate:0.5 },
+  'i':  { word:'see',    rate:0.6 },
+  'eɪ': { word:'say',    rate:0.6 },
+  'oʊ': { word:'go',     rate:0.6 },
+  'u':  { word:'food',   rate:0.6 },
+  'ɔ':  { word:'law',    rate:0.6 },
+  'aɪ': { word:'fly',    rate:0.6 },
+  'aʊ': { word:'now',    rate:0.6 },
+  'ɔɪ': { word:'boy',    rate:0.6 },
+  'ɝ':  { word:'bird',   rate:0.5 },
+  'ɚ':  { word:'butter', rate:0.5 },
+  'p':  { word:'pen',    rate:0.7 },
+  'b':  { word:'big',    rate:0.7 },
+  't':  { word:'top',    rate:0.7 },
+  'd':  { word:'dog',    rate:0.7 },
+  'k':  { word:'cat',    rate:0.7 },
+  'g':  { word:'go',     rate:0.7 },
+  'f':  { word:'fan',    rate:0.7 },
+  'v':  { word:'van',    rate:0.7 },
+  's':  { word:'sun',    rate:0.7 },
+  'z':  { word:'zoo',    rate:0.7 },
+  'ʃ':  { word:'shoe',   rate:0.7 },
+  'ʒ':  { word:'vision', rate:0.7 },
+  'tʃ': { word:'chair',  rate:0.7 },
+  'dʒ': { word:'jump',   rate:0.7 },
+  'θ':  { word:'think',  rate:0.7 },
+  'ð':  { word:'the',    rate:0.7 },
+  'h':  { word:'hat',    rate:0.7 },
+  'm':  { word:'map',    rate:0.7 },
+  'n':  { word:'net',    rate:0.7 },
+  'ŋ':  { word:'ring',   rate:0.7 },
+  'l':  { word:'leg',    rate:0.7 },
+  'r':  { word:'red',    rate:0.7 },
+  'w':  { word:'wet',    rate:0.7 },
+  'j':  { word:'yes',    rate:0.7 },
+}
+
+function speakPhoneme(sym, el) {
   el.classList.add('playing');
-  speak(word);
+  const info = phonemeMap[sym] || { word: sym, rate: 0.7 };
+  if (window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(info.word);
+    u.lang = 'en-US';
+    u.rate = info.rate;
+    u.pitch = 1.0;
+    // Pick best available US English voice
+    const voices = window.speechSynthesis.getVoices();
+    const usVoice = voices.find(v => v.lang === 'en-US' && v.localService) ||
+                    voices.find(v => v.lang === 'en-US') ||
+                    voices.find(v => v.lang.startsWith('en'));
+    if (usVoice) u.voice = usVoice;
+    window.speechSynthesis.speak(u);
+  }
   addXP(1);
-  setTimeout(() => el.classList.remove('playing'), 600);
+  setTimeout(() => el.classList.remove('playing'), 800);
 }
 
 // ─── VOCAB DATA ───
